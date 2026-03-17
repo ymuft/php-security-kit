@@ -1,4 +1,4 @@
-# 🔐 PHP Security Core 🇧🇷
+# 🔐 PHP Security Core 
 
 Minimal and practical security middleware for PHP applications.
 
