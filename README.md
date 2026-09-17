@@ -1,54 +1,58 @@
-# 🔐 PHP Security Core 
+# PHP Security Kit
 
-Minimal and practical security middleware for PHP applications.
+A lightweight PHP security middleware experiment focused on common protections for small applications without requiring a full framework.
 
-Designed for developers who want solid protection without relying on heavy frameworks.
+## What it covers
 
----
+- secure session cookie settings (`HttpOnly`, `Secure`, `SameSite`)
+- periodic session ID regeneration
+- basic session fingerprinting using client information
+- CSRF token generation and validation for POST requests
+- simple request rate limiting
+- role-based access checks
+- security-related HTTP headers
+- automatic session timeout handling
+- HTML output escaping helper
 
-## 🚀 Features
+## Usage
 
-- Secure session configuration (HttpOnly, Secure, SameSite)
-- Protection against session fixation
-- Basic session hijacking detection (IP + User-Agent)
-- CSRF protection (automatic token validation)
-- Basic rate limiting (per IP + endpoint)
-- Role-based access control
-- Security headers (XSS, clickjacking, etc.)
-- Session timeout handling
-
----
-
-## 📦 Installation
-
-Just include the middleware in any protected page:
+Copy `security.php` into your project and include it before protected page output:
 
 ```php
-require_once __DIR__ . '/core/security.php';
+require_once __DIR__ . '/security.php';
 ```
 
-## 🧪 CSRF Protection Example
+The middleware expects an authenticated session to contain `$_SESSION['username']`. Pages that use role checks can also provide `$_SESSION['role']`.
+
+### CSRF-protected form
 
 ```php
 <form method="POST">
-    <?php echo csrf_token_input(); ?>
+    <?= csrf_token_input() ?>
     <input type="text" name="data">
     <button type="submit">Send</button>
 </form>
 ```
 
----
+### Role check
 
-### ✔ Estrutura de pastas formatada:
+```php
+require_role('admin');
+```
 
-```md
-## 📁 Suggested Structure
-/core
-    security.php
+## Project structure
 
-/logs
-    php-error.log
+```text
+php-security-kit/
+├── security.php
+├── README.md
+└── LICENSE
+```
 
-/public
-    index.php
-    login.php
+## Notes
+
+This repository is intentionally small and dependency-free. It is useful as a reference implementation and as a starting point for controlled projects, but security requirements vary by application and deployment environment. Review and adapt the controls before using them in production.
+
+## License
+
+Released under the MIT License.
